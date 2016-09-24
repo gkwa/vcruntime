@@ -25,6 +25,7 @@ when 'x86_64'
     source node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['url']
     installer_type :custom
     options '/q'
+    returns [0, 5, 42, 127]
   end
 when /i[3-6]86/
   windows_package node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['name'] do
@@ -32,5 +33,6 @@ when /i[3-6]86/
     source node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['url']
     installer_type :custom
     options '/q'
+    returns [0, 5, 42, 127]
   end
 end
