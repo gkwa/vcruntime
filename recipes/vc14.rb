@@ -20,17 +20,17 @@
 
 package_name = ::File.basename(node['KB2999226']['url'])
 Chef::Log.error "package_url=#{node['KB2999226']['url']}"
-
 require 'uri'
 uri = URI.parse(node['KB2999226']['url'])
-basename = File.basename(uri.path, '.msu')
-cabfile="#{basename}.cab"
-Chef::Log.error "cabfile=#{cabfile}"
 
 remote_file "#{Chef::Config[:file_cache_path]}\\#{package_name}" do
   source node['KB2999226']['url']
   checksum node['KB2999226']['checksum']
 end
+
+basename = File.basename(uri.path, '.msu')
+cabfile="#{basename}.cab"
+Chef::Log.error "cabfile=#{cabfile}"
 
 powershell_script 'Install KB2999226' do
   code <<-EOH
