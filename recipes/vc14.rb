@@ -18,14 +18,17 @@
 # limitations under the License.
 #
 
-package_name = ::File.basename(node['KB2999226']['url'])
+hotfix_package_name = ::File.basename(node['KB2999226']['url'])
 Chef::Log.error "package_url=#{node['KB2999226']['url']}"
 require 'uri'
 uri = URI.parse(node['KB2999226']['url'])
 
-remote_file "#{Chef::Config[:file_cache_path]}\\#{package_name}" do
+remote_file "#{Chef::Config[:file_cache_path]}\\#{hotfix_package_name}" do
   source node['KB2999226']['url']
   checksum node['KB2999226']['checksum']
+  not_if "#{ENV['WINDIR']}\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo \
+	-NonInteractive -NoProfile -ExecutionPolicy RemoteSigned Get-Hotfix -ID KB2999226 \
+	-ErrorAction SilentlyContinue"
 end
 
 basename = File.basename(uri.path, '.msu')
@@ -36,9 +39,12 @@ powershell_script 'Install KB2999226' do
   code <<-EOH
   # https://goo.gl/xt3Asq
   mkdir -Force "#{Chef::Config[:file_cache_path]}\\#{basename}"
-  expand -f:* "#{Chef::Config[:file_cache_path]}\\#{package_name}" "#{Chef::Config[:file_cache_path]}\\#{basename}"
+  expand -f:* "#{Chef::Config[:file_cache_path]}\\#{hotfix_package_name}" "#{Chef::Config[:file_cache_path]}\\#{basename}"
   dism.exe /Online /Add-Package /PackagePath:"#{Chef::Config[:file_cache_path]}\\#{basename}\\#{cabfile}"
   EOH
+  not_if "#{ENV['WINDIR']}\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo \
+	-NonInteractive -NoProfile -ExecutionPolicy RemoteSigned Get-Hotfix -ID KB2999226 \
+	-ErrorAction SilentlyContinue"
 end
 
 case node['kernel']['machine']
