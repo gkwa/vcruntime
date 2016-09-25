@@ -19,8 +19,6 @@
 #
 
 package_name = ::File.basename(node['KB2999226']['url'])
-package_local_path = "#{Chef::Config[:file_cache_path]}\\#{package_name}"
-Chef::Log.error "package_local_path=#{package_local_path}"
 Chef::Log.error "package_url=#{node['KB2999226']['url']}"
 
 require 'uri'
@@ -29,7 +27,7 @@ basename = File.basename(uri.path, '.msu')
 cabfile="#{basename}.cab"
 Chef::Log.error "cabfile=#{cabfile}"
 
-remote_file "#{package_local_path}" do
+remote_file "#{Chef::Config[:file_cache_path]}\\#{package_name}" do
   source node['KB2999226']['url']
   checksum node['KB2999226']['checksum']
 end
@@ -38,7 +36,7 @@ powershell_script 'Install KB2999226' do
   code <<-EOH
   # https://goo.gl/xt3Asq
   mkdir -Force "#{Chef::Config[:file_cache_path]}\\#{basename}"
-  expand -f:* "#{package_local_path}" "#{Chef::Config[:file_cache_path]}\\#{basename}"
+  expand -f:* "#{Chef::Config[:file_cache_path]}\\#{package_name}" "#{Chef::Config[:file_cache_path]}\\#{basename}"
   dism.exe /Online /Add-Package /PackagePath:"#{Chef::Config[:file_cache_path]}\\#{basename}\\#{cabfile}"
   EOH
 end
