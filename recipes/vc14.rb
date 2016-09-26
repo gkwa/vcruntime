@@ -18,7 +18,8 @@
 # limitations under the License.
 #
 
-# FIXME: move this hotfix installer to helper?
+Chef::Resource::RemoteFile.send(:include, Vcruntime::Helper)
+Chef::Resource::PowershellScript.send(:include, Vcruntime::Helper)
 
 hotfix_package_name = ::File.basename(node['KB2999226']['url'])
 Chef::Log.error "package_url=#{node['KB2999226']['url']}"
@@ -29,9 +30,7 @@ remote_file "#{Chef::Config[:file_cache_path]}\\#{hotfix_package_name}" do
   source node['KB2999226']['url']
   checksum node['KB2999226']['checksum']
   # FIXME: we're using this guard twice Get-Hotfix -ID KB2999226
-  not_if "#{ENV['WINDIR']}\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo \
-	-NonInteractive -NoProfile -ExecutionPolicy RemoteSigned Get-Hotfix -ID KB2999226 \
-	-ErrorAction SilentlyContinue"
+  not_if { has_hotfix? }
 end
 
 basename = File.basename(uri.path, '.msu')
@@ -46,9 +45,7 @@ powershell_script 'Install KB2999226' do
   dism.exe /Online /Add-Package /PackagePath:"#{Chef::Config[:file_cache_path]}\\#{basename}\\#{cabfile}"
   EOH
   # FIXME: we're using this guard twice Get-Hotfix -ID KB2999226
-  not_if "#{ENV['WINDIR']}\\system32\\WindowsPowerShell\\v1.0\\powershell.exe -NoLogo \
-	-NonInteractive -NoProfile -ExecutionPolicy RemoteSigned Get-Hotfix -ID KB2999226 \
-	-ErrorAction SilentlyContinue"
+  not_if { has_hotfix? }
 end
 
 case node['kernel']['machine']
