@@ -22,7 +22,7 @@ Chef::Resource::RemoteFile.send(:include, Vcruntime::Helper)
 Chef::Resource::PowershellScript.send(:include, Vcruntime::Helper)
 
 hotfix_package_name = ::File.basename(node['KB2999226']['url'])
-Chef::Log.error "package_url=#{node['KB2999226']['url']}"
+Chef::Log.info "package_url=#{node['KB2999226']['url']}"
 require 'uri'
 uri = URI.parse(node['KB2999226']['url'])
 
@@ -35,7 +35,7 @@ end
 
 basename = File.basename(uri.path, '.msu')
 cabfile="#{basename}.cab"
-Chef::Log.error "cabfile=#{cabfile}"
+Chef::Log.info "cabfile=#{cabfile}"
 
 powershell_script 'Install KB2999226' do
   code <<-EOH
