@@ -101,8 +101,8 @@ default['vcruntime']['vc14']['x64']['14.0.23026']['name']      = 'Microsoft Visu
 default['vcruntime']['vc14']['x86']['14.0.24212']['url']       = 'https://download.microsoft.com/download/9/A/2/9A2A7E36-A8AF-46C0-8A78-A5EB111EEFE2/vc_redist.x86.exe'
 default['vcruntime']['vc14']['x86']['14.0.24212']['sha256sum'] = 'dafb8b5f4b46bfaf7faa1d0ad05211f5c9855f0005cd603f8b5037b6a708d6b6'
 default['vcruntime']['vc14']['x86']['14.0.24212']['name']      = 'Microsoft Visual C++ 2015 Redistributable (x86) - version'
-default['vcruntime']['vc14']['x64']['14.0.24212']['url']       = 'https://download.microsoft.com/download/9/A/2/9A2A7E36-A8AF-46C0-8A78-A5EB111EEFE2/vc_redist.x86.exe'
-default['vcruntime']['vc14']['x64']['14.0.24212']['sha256sum'] = 'dafb8b5f4b46bfaf7faa1d0ad05211f5c9855f0005cd603f8b5037b6a708d6b6'
-default['vcruntime']['vc14']['x64']['14.0.24212']['name']      = 'Microsoft Visual C++ 2015 Redistributable (x86) - version'
+default['vcruntime']['vc14']['x64']['14.0.24212']['url']       = 'https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x64.exe'
+default['vcruntime']['vc14']['x64']['14.0.24212']['sha256sum'] = 'da66717784c192f1004e856bbcf7b3e13b7bf3ea45932c48e4c9b9a50ca80965'
+default['vcruntime']['vc14']['x64']['14.0.24212']['name']      = 'Microsoft Visual C++ 2015 Redistributable (x64) - version'
 
 default['vcruntime']['vc14']['version'] = '14.0.24212'
