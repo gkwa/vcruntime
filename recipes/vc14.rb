@@ -30,7 +30,7 @@ remote_file "#{Chef::Config[:file_cache_path]}\\#{hotfix_package_name}" do
   source node['KB2999226']['url']
   checksum node['KB2999226']['checksum']
   # FIXME: we're using this guard twice Get-Hotfix -ID KB2999226
-  not_if { has_hotfix? }
+  not_if { has_hotfix?('KB2999226') }
 end
 
 basename = File.basename(uri.path, '.msu')
@@ -45,7 +45,7 @@ powershell_script 'Install KB2999226' do
   dism.exe /Online /Add-Package /PackagePath:"#{Chef::Config[:file_cache_path]}\\#{basename}\\#{cabfile}"
   EOH
   # FIXME: we're using this guard twice Get-Hotfix -ID KB2999226
-  not_if { has_hotfix? }
+  not_if { has_hotfix?('KB2999226') }
 end
 
 case node['kernel']['machine']
