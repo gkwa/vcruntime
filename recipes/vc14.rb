@@ -44,6 +44,8 @@ powershell_script 'Install KB2999226' do
   expand -f:* "#{Chef::Config[:file_cache_path]}\\#{hotfix_package_name}" "#{Chef::Config[:file_cache_path]}\\#{basename}"
   dism.exe /Online /Add-Package /PackagePath:"#{Chef::Config[:file_cache_path]}\\#{basename}\\#{cabfile}"
   EOH
+  # FIXME
+  ignore_failure true # fails on mwrock/Windows2012R2
   # FIXME: we're using this guard twice Get-Hotfix -ID KB2999226
   not_if { has_hotfix?('KB2999226') }
 end
