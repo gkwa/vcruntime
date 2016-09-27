@@ -42,7 +42,9 @@ powershell_script 'Install KB2999226' do
   # https://goo.gl/xt3Asq
   mkdir -Force "#{Chef::Config[:file_cache_path]}\\#{basename}"
   expand -f:* "#{Chef::Config[:file_cache_path]}\\#{hotfix_package_name}" "#{Chef::Config[:file_cache_path]}\\#{basename}"
+  $ErrorActionPreference = 'SilentlyContinue'
   dism.exe /Online /Add-Package /PackagePath:"#{Chef::Config[:file_cache_path]}\\#{basename}\\#{cabfile}"
+  if(-not($LastExitCode -eq 775)){ throw }
   EOH
   # FIXME
   ignore_failure true # fails on mwrock/Windows2012R2
