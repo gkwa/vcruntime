@@ -21,35 +21,41 @@
 Chef::Resource::RemoteFile.send(:include, Vcruntime::Helper)
 Chef::Resource::PowershellScript.send(:include, Vcruntime::Helper)
 
-hotfix_package_name = ::File.basename(node['KB2999226']['url'])
-Chef::Log.info "package_url=#{node['KB2999226']['url']}"
-require 'uri'
-uri = URI.parse(node['KB2999226']['url'])
+def install_dependency
+  hotfix_package_name = ::File.basename(node['KB2999226']['url'])
+  Chef::Log.info "package_url=#{node['KB2999226']['url']}"
+  require 'uri'
+  uri = URI.parse(node['KB2999226']['url'])
 
-remote_file "#{Chef::Config[:file_cache_path]}\\#{hotfix_package_name}" do
-  source node['KB2999226']['url']
-  checksum node['KB2999226']['checksum']
-  # FIXME: we're using this guard twice Get-Hotfix -ID KB2999226
-  not_if { has_hotfix?('KB2999226') }
-end
+  remote_file "#{Chef::Config[:file_cache_path]}\\#{hotfix_package_name}" do
+    source node['KB2999226']['url']
+    checksum node['KB2999226']['checksum']
+    # FIXME: we're using this guard twice Get-Hotfix -ID KB2999226
+    not_if { has_hotfix?('KB2999226') }
+  end
 
-basename = File.basename(uri.path, '.msu')
-cabfile="#{basename}.cab"
-Chef::Log.info "cabfile=#{cabfile}"
+  basename = File.basename(uri.path, '.msu')
+  cabfile="#{basename}.cab"
+  Chef::Log.info "cabfile=#{cabfile}"
 
-powershell_script 'Install KB2999226' do
-  code <<-EOH
+  powershell_script 'Install KB2999226' do
+    code <<-EOH
   # https://goo.gl/xt3Asq
   mkdir -Force "#{Chef::Config[:file_cache_path]}\\#{basename}"
   expand -f:* "#{Chef::Config[:file_cache_path]}\\#{hotfix_package_name}" "#{Chef::Config[:file_cache_path]}\\#{basename}"
   $ErrorActionPreference = 'SilentlyContinue'
   dism.exe /Online /Add-Package /PackagePath:"#{Chef::Config[:file_cache_path]}\\#{basename}\\#{cabfile}"
   if(-not($LastExitCode -eq 775)){ throw }
-  EOH
-  # FIXME
-  ignore_failure true # fails on mwrock/Windows2012R2
-  # FIXME: we're using this guard twice Get-Hotfix -ID KB2999226
-  not_if { has_hotfix?('KB2999226') }
+    EOH
+    # FIXME
+    ignore_failure true # fails on mwrock/Windows2012R2
+    # FIXME: we're using this guard twice Get-Hotfix -ID KB2999226
+    not_if { has_hotfix?('KB2999226') }
+  end
+end
+
+if !node['KB2999226']['url'].to_s.empty?
+  install_dependency
 end
 
 case node['kernel']['machine']
