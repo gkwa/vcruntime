@@ -54,7 +54,7 @@ def install_dependency
   end
 end
 
-if node.attribute('KB2999226') and !node['KB2999226']['url'].to_s.empty?
+if node.attribute?('KB2999226') and !node['KB2999226']['url'].to_s.empty?
   install_dependency
 end
 
