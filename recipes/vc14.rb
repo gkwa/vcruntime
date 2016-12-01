@@ -62,8 +62,8 @@ include_recipe 'chrome'
 powershell_script 'Disable automatic proxy detection' do
   code <<-EOH1
 get-service wuauserv | where {$_.status -eq 'running'} | stop-service -pass
-set-location c:\windows
-rename-item c:\windows\SoftwareDistribution c:\windows\SoftwareDistribution.bck
+set-location "c:\\windows"
+rename-item "c:\\windows\\SoftwareDistribution" "c:\\windows\\SoftwareDistribution.bck"
 start-service wuauserv
   EOH1
 end
