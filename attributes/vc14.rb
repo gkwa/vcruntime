@@ -87,8 +87,6 @@ if node['platform_family'] == 'windows'
     when 'x86_64'
       default['KB2999226']['url'] = 'https://download.microsoft.com/download/A/7/A/A7A70B17-ADF9-4FC3-A722-69FA89B79756/Windows6.0-KB2999226-x64.msu'
       default['KB2999226']['checksum'] = '10069de7315ca3f405e2579846af5dab3089a8496ae4c1ab61763480f43a05a8'
-      default['KB2999226']['url'] = 'https://www.python.org/ftp/python/3.5.0/amd64a4/Windows6.1-KB2999226-x64.msu'
-      default['KB2999226']['checksum'] = '0bdbb81b9026aae9af1fd7c171c303a0c3cc1875d57f4455a09b238e23897b4c'
     end
   end
 end
