@@ -97,6 +97,10 @@ Set-Itemproperty "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet 
   EOH
 end
 
+if node.attribute?('KB2999226') and !node['KB2999226']['url'].to_s.empty?
+  install_dependency
+end
+
 case node['kernel']['machine']
 when 'x86_64'
   windows_package node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['name'] do
@@ -128,8 +132,4 @@ when /i[3-6]86/
     returns [0, 42, 127, 5]
     options '/repiar /passive /norestart /log %TEMP%\vcredist_rep.log.txt'
   end
-end
-
-if node.attribute?('KB2999226') and !node['KB2999226']['url'].to_s.empty?
-  install_dependency
 end
