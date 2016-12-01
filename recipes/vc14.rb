@@ -107,6 +107,7 @@ when 'x86_64'
     checksum node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['sha256sum']
     source node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['url']
     installer_type :custom
+    returns [0, 42, 127, 5]
     options '/q'
   end
 when /i[3-6]86/
@@ -114,6 +115,7 @@ when /i[3-6]86/
     checksum node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['sha256sum']
     source node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['url']
     installer_type :custom
+    returns [0, 42, 127, 5]
     options '/q'
   end
 end
