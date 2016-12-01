@@ -1,0 +1,33 @@
+---
+driver:
+  name: vagrant
+  driver_config:
+    http_proxy: http://10.0.5.2:3128
+  vagrantfiles:
+  - VagrantAdditionalConfig.rb
+
+provisioner:
+  name: policyfile_zero
+  require_chef_omnibus: true
+  install_msi_url: http://packages.chef.io/stable/windows/2008r2/chef-client-12.14.89-1-x86.msi
+  # vm's gateway is my virtualbox host running OSX squid, this saves me
+  # re-downloading msi as long as squid runs on virtualbox host
+  log_level: info
+
+platforms:
+- name: win2008r2-standard
+  os_type: windows
+  shell_type: powershell #https://goo.gl/2Pcl2s
+  transport:
+    name: winrm
+  driver_config:
+    gui: false
+    box: win2008r2-standard
+    communicator: winrm
+#    vm_hostname: false
+    boot_timeout: 120
+#    vm_hostname: false
+
+suites:
+  - name: default
+
