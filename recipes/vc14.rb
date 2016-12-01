@@ -110,7 +110,21 @@ when 'x86_64'
     returns [0, 42, 127, 5]
     options '/install /passive /norestart'
   end
+  windows_package node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['name'] do
+    checksum node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['sha256sum']
+    source node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['url']
+    installer_type :custom
+    returns [0, 42, 127, 5]
+    options '/install /passive /norestart'
+  end
 when /i[3-6]86/
+  windows_package node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['name'] do
+    checksum node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['sha256sum']
+    source node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['url']
+    installer_type :custom
+    returns [0, 42, 127, 5]
+    options '/install /passive /norestart'
+  end
   windows_package node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['name'] do
     checksum node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['sha256sum']
     source node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['url']
