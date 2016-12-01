@@ -45,7 +45,9 @@ def install_dependency
   expand -f:* "#{Chef::Config[:file_cache_path]}\\#{hotfix_package_name}" "#{Chef::Config[:file_cache_path]}\\#{basename}"
   $ErrorActionPreference = 'SilentlyContinue'
   dism.exe /Online /Add-Package /PackagePath:"#{Chef::Config[:file_cache_path]}\\#{basename}\\#{cabfile}"
-  if(-not($LastExitCode -eq 775)){ throw }
+  # Error 775: https://msdn.microsoft.com/en-us/library/windows/desktop/ms681388(v=vs.85).aspx
+  # Error 1151: The specified package is not applicable to this image.
+  if(-not($LastExitCode -eq 775 -or $LastExitCode -eq 1151)){ throw }
     EOH
     # FIXME
     ignore_failure true # fails on mwrock/Windows2012R2
