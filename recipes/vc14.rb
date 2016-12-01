@@ -21,8 +21,6 @@
 Chef::Resource::RemoteFile.send(:include, Vcruntime::Helper)
 Chef::Resource::PowershellScript.send(:include, Vcruntime::Helper)
 
-include_recipe 'chrome'
-
 def install_dependency
   hotfix_package_name = ::File.basename(node['KB2999226']['url'])
   Chef::Log.info "package_url=#{node['KB2999226']['url']}"
@@ -57,6 +55,8 @@ def install_dependency
     not_if { has_hotfix?('KB2999226') }
   end
 end
+
+include_recipe 'chrome'
 
 # try suggestion from http://answers.microsoft.com/en-us/windows/forum/windows8_1-update/visual-c-2015-redistributable-error/ae9a0c2d-a23b-4dd7-ab6b-cbefb8908c99
 powershell_script 'Disable automatic proxy detection' do
