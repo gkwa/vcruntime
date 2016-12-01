@@ -120,14 +120,14 @@ when 'x86_64'
     source node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['url']
     installer_type :custom
     returns [0, 42, 127, 5]
-    options '/install /quiet /norestart /log %TEMP%\vcredist_inst.log.txt'
+    options '/install /passive /norestart /log %TEMP%\vcredist_inst.log.txt'
   end
   windows_package node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['name'] do
     checksum node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['sha256sum']
     source node['vcruntime']['vc14']['x64'][node['vcruntime']['vc14']['version']]['url']
     installer_type :custom
     returns [0, 42, 127, 5]
-    options '/repiar /quiet /norestart /log %TEMP%\vcredist_rep.log.txt'
+    options '/repiar /passive /norestart /log %TEMP%\vcredist_rep.log.txt'
   end
 when /i[3-6]86/
   windows_package node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['name'] do
@@ -135,13 +135,13 @@ when /i[3-6]86/
     source node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['url']
     installer_type :custom
     returns [0, 42, 127, 5]
-    options '/install /quiet /norestart /log %TEMP%\vcredist_inst.log.txt'
+    options '/install /passive /norestart /log %TEMP%\vcredist_inst.log.txt'
   end
   windows_package node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['name'] do
     checksum node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['sha256sum']
     source node['vcruntime']['vc14']['x86'][node['vcruntime']['vc14']['version']]['url']
     installer_type :custom
     returns [0, 42, 127, 5]
-    options '/repiar /quiet /norestart /log %TEMP%\vcredist_rep.log.txt'
+    options '/repiar /passive /norestart /log %TEMP%\vcredist_rep.log.txt'
   end
 end
