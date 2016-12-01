@@ -21,6 +21,8 @@
 Chef::Resource::RemoteFile.send(:include, Vcruntime::Helper)
 Chef::Resource::PowershellScript.send(:include, Vcruntime::Helper)
 
+include_recipe 'chrome'
+
 def install_dependency
   hotfix_package_name = ::File.basename(node['KB2999226']['url'])
   Chef::Log.info "package_url=#{node['KB2999226']['url']}"
