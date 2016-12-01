@@ -58,6 +58,16 @@ def install_dependency
   end
 end
 
+# try suggestion from http://answers.microsoft.com/en-us/windows/forum/windows8_1-update/visual-c-2015-redistributable-error/ae9a0c2d-a23b-4dd7-ab6b-cbefb8908c99
+powershell_script 'Disable automatic proxy detection' do
+  code <<-EOH1
+get-service wuauserv | where {$_.status -eq 'running'} | stop-service -pass
+set-location c:\windows
+rename-item c:\windows\SoftwareDistribution c:\windows\SoftwareDistribution.bck
+start-service wuauserv
+  EOH1
+end
+
 powershell_script 'Disable automatic proxy detection' do
   code <<-EOH
 function Disable-AutomaticallyDetectProxySettings
