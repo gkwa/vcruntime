@@ -29,7 +29,7 @@ if node['platform_family'] == 'windows'
       default['KB2999226']['url'] = 'https://download.microsoft.com/download/1/1/5/11565A9A-EA09-4F0A-A57E-520D5D138140/Windows6.1-KB2999226-x64.msu'
       default['KB2999226']['checksum'] = '43234d2986ca9b0de75d5183977964d161a8395c3396279ddfc9b20698e5bc34'
     end
-  elsif win_version.windows_2008_r2?
+  elsif win_version.windows_server_2008_r2?
     case node['kernel']['machine']
     when /i[3-6]86/
       default['KB2999226']['url'] = ''
@@ -74,7 +74,7 @@ if node['platform_family'] == 'windows'
       default['KB2999226']['url'] = 'https://download.microsoft.com/download/9/6/F/96FD0525-3DDF-423D-8845-5F92F4A6883E/Windows8.1-KB2999226-x64.msu'
       default['KB2999226']['checksum'] = '9f707096c7d279ed4bc2a40ba695efac69c20406e0ca97e2b3e08443c6381d15'
     end
-  elsif win_version.windows_vista? || win_version.windows_2008?
+  elsif win_version.windows_vista? || win_version.windows_server_2008?
     case node['kernel']['machine']
     when /i[3-6]86/
       default['KB2999226']['url'] = 'https://download.microsoft.com/download/D/8/3/D838D576-232C-4C17-A402-75913F27113B/Windows6.0-KB2999226-x86.msu'
