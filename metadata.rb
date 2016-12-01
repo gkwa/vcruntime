@@ -11,7 +11,6 @@ version          '0.2.3'
 end
 
 depends 'windows'
-depends 'chrome'
 
 provides 'vcruntime::vc9'
 provides 'vcruntime::vc10'
