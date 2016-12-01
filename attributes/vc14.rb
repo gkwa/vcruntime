@@ -119,4 +119,4 @@ default['vcruntime']['vc14']['x64']['14.0.24215.1']['url']       = 'https://down
 default['vcruntime']['vc14']['x64']['14.0.24215.1']['sha256sum'] = 'da66717784c192f1004e856bbcf7b3e13b7bf3ea45932c48e4c9b9a50ca80965'
 default['vcruntime']['vc14']['x64']['14.0.24215.1']['name']      = 'Microsoft Visual C++ 2015 Redistributable (x64) - version'
 
-default['vcruntime']['vc14']['version']                          = '14.0.24215.1'
+default['vcruntime']['vc14']['version']                          = '14.0.23026'
