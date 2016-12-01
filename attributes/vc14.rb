@@ -17,9 +17,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-https://download.microsoft.com/download/9/3/E/93E0745A-EAE9-4B5A-B50C-012F2D3B6659/Windows8-RT-KB2999226-x64.msu
-
-
 if node['platform_family'] == 'windows'
   require 'chef/win32/version'
   win_version = Chef::ReservedNames::Win32::Version.new
