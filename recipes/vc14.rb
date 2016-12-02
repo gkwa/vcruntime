@@ -118,7 +118,7 @@ function Disable-AutomaticallyDetectProxySettings
 Write-Host "FIXME: debug, we got here7"
 
 $job = Start-Job -ScriptBlock { Start-Process "C:\\Program Files\\Internet Explorer\\iexplore.exe" -Wait -PassThru }
-Start-Sleep -Seconds 5
+Start-Sleep -Seconds 60
 Stop-Job -Id $job.Id
 
 Write-Host "FIXME: debug, we got here8"
