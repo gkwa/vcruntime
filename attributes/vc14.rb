@@ -47,7 +47,7 @@ if node['platform_family'] == 'windows'
       default['KB2999226']['url'] = 'https://download.microsoft.com/download/A/C/1/AC15393F-A6E6-469B-B222-C44B3BB6ECCC/Windows8-RT-KB2999226-x64.msu'
       default['KB2999226']['checksum'] = '50cae25da33fa950222d1a803e42567291eb7feb087fa119b1c97fe9d41cd9f8'
     end
-  elsif windows_server_2012_r2?
+  elsif win_version.windows_server_2012_r2?
     case node['kernel']['machine']
     when /i[3-6]86/
       default['KB2999226']['url'] = ''
@@ -56,7 +56,7 @@ if node['platform_family'] == 'windows'
       default['KB2999226']['url'] = 'https://download.microsoft.com/download/D/1/3/D13E3150-3BB2-4B22-9D8A-47EE2D609FFF/Windows8.1-KB2999226-x64.msu'
       default['KB2999226']['checksum'] = '9f707096c7d279ed4bc2a40ba695efac69c20406e0ca97e2b3e08443c6381d15'
     end
-  elsif windows_server_2012?
+  elsif win_version.windows_server_2012?
     case node['kernel']['machine']
     when /i[3-6]86/
       default['KB2999226']['url'] = ''
