@@ -67,6 +67,7 @@ start-service wuauserv
 end
 
 powershell_script 'Disable automatic proxy detection' do
+  ignore_failure true
   code <<-EOH
 function Disable-AutomaticallyDetectProxySettings
 {
