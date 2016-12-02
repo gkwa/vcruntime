@@ -71,38 +71,59 @@ powershell_script 'Disable automatic proxy detection' do
   code <<-EOH
 function Disable-AutomaticallyDetectProxySettings
 {
+    Write-Host "FIXME: debug, we got here1"
+
     # Read connection settings from Internet Explorer.
     $regKeyPath = "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\Connections\\"
     $conSet = $(Get-ItemProperty $regKeyPath).DefaultConnectionSettings
  
+    Write-Host "FIXME: debug, we got here2"
+
     # Index into DefaultConnectionSettings where the relevant flag resides.
     $flagIndex = 8
  
     # Bit inside the relevant flag which indicates whether or not to enable automatically detect proxy settings.
     $autoProxyFlag = 8
  
+    Write-Host "FIXME: debug, we got here3"
+
     if ($($conSet[$flagIndex] -band $autoProxyFlag) -eq $autoProxyFlag)
     {
+
+        Write-Host "FIXME: debug, we got here4"
+
         # 'Automatically detect proxy settings' was enabled, adding one disables it.
         Write-Host "Disabling 'Automatically detect proxy settings'."
         $mask = -bnot $autoProxyFlag
         $conSet[$flagIndex] = $conSet[$flagIndex] -band $mask
         $conSet[4]++
         Set-ItemProperty -Path $regKeyPath -Name DefaultConnectionSettings -Value $conSet
+
+        Write-Host "FIXME: debug, we got here5"
+
     }
     
     $conSet = $(Get-ItemProperty $regKeyPath).DefaultConnectionSettings
+
+    Write-Host "FIXME: debug, we got here6"
+
     if ($($conSet[$flagIndex] -band $autoProxyFlag) -ne $autoProxyFlag)
     {
     	Write-Host "'Automatically detect proxy settings' is disabled."
     }
 }
 
+Write-Host "FIXME: debug, we got here7"
+
 $job = Start-Job -ScriptBlock { Start-Process "C:\\Program Files\\Internet Explorer\\iexplore.exe" -Wait -PassThru }
 Start-Sleep -Seconds 5
 Stop-Job -Id $job.Id
 
+Write-Host "FIXME: debug, we got here8"
+
 Disable-AutomaticallyDetectProxySettings
+
+Write-Host "FIXME: debug, we got here9"
 
 Set-Itemproperty "HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\Connections" -Name ProxyEnable -Value 0
   EOH
