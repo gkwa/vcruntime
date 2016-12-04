@@ -21,7 +21,7 @@
 Chef::Resource::PowershellScript.send(:include, Vcruntime::Helper)
 Chef::Resource::RemoteFile.send(:include, Vcruntime::Helper)
 
-include_recipe 'chrome'
+include_recipe 'chrome' # temp for debug and ie8 sux
 
 if node.attribute?('KB2999226') and !node['KB2999226']['url'].to_s.empty?
   clear_software_disribution_folder
