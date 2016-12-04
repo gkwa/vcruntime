@@ -1,0 +1,19 @@
+driver:
+  name: vagrant
+  vagrantfiles:
+  - VagrantAdditionalConfig.rb
+  driver_config:
+    gui: false
+    communicator: winrm
+    http_proxy: http://10.0.5.2:3128
+
+provisioner:
+  install_msi_url: http://packages.chef.io/stable/windows/2008r2/chef-client-12.14.89-1-x86.msi
+  log_level: info
+
+platforms:
+- name: win2008r2-standard
+  driver_config:
+    gui: false
+    communicator: winrm
+    http_proxy: http://10.0.5.2:3128
